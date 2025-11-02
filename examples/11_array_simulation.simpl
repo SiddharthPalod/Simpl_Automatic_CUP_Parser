@@ -1,0 +1,35 @@
+BEGIN
+    // Simulate array operations using individual variables
+    arr0 := 10;
+    arr1 := 20;
+    arr2 := 30;
+    arr3 := 40;
+    arr4 := 50;
+    
+    // Calculate sum of array elements
+    sum := 0;
+    i := 0;
+    
+    WHILE i < 5 DO
+        IF i == 0 THEN
+            sum := sum + arr0;
+        ELSE
+            IF i == 1 THEN
+                sum := sum + arr1;
+            ELSE
+                IF i == 2 THEN
+                    sum := sum + arr2;
+                ELSE
+                    IF i == 3 THEN
+                        sum := sum + arr3;
+                    ELSE
+                        sum := sum + arr4;
+                    FI
+                FI
+            FI
+        FI
+        i := i + 1;
+    DONE
+    
+    average := sum / 5;
+END 

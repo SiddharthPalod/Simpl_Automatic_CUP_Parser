@@ -1,0 +1,11 @@
+BEGIN
+    x := 5;
+    y := 10;
+    
+    isLess := x < y;
+    isGreater := x > y;
+    isEqual := x == y;
+    isNotEqual := x != y;
+    isLessEqual := x <= y;
+    isGreaterEqual := x >= y;
+END 

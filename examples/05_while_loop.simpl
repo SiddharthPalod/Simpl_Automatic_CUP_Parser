@@ -1,0 +1,11 @@
+BEGIN
+    counter := 0;
+    sum := 0;
+    
+    WHILE counter < 10 DO
+        sum := sum + counter;
+        counter := counter + 1;
+    DONE
+    
+    average := sum / 10;
+END 

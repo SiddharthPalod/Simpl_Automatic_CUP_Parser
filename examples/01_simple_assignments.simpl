@@ -1,0 +1,6 @@
+BEGIN
+    x := 10;
+    y := 20;
+    z := x + y;
+    result := z * 2;
+END 

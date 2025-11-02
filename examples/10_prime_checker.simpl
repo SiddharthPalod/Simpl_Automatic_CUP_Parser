@@ -1,0 +1,19 @@
+BEGIN
+    number := 17;
+    isPrime := true;
+    divisor := 2;
+    
+    WHILE divisor < number DO
+        // Simulate modulo using repeated subtraction
+        temp := number;
+        WHILE temp >= divisor DO
+            temp := temp - divisor;
+        DONE
+        IF temp == 0 THEN
+            isPrime := false;
+        FI
+        divisor := divisor + 1;
+    DONE
+    
+    result := isPrime;
+END 

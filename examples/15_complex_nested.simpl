@@ -1,0 +1,27 @@
+BEGIN
+    // Complex nested control structures
+    x := 1;
+    y := 5;
+    z := 10;
+    
+    WHILE x < 100 DO
+        IF x < y THEN
+            x := x + 2;
+        ELSE
+            IF x < z THEN
+                y := y + 1;
+                x := x + 3;
+            ELSE
+                x := x + 5;
+            FI
+        FI
+        
+        IF x > 50 THEN
+            y := y + 2;
+        ELSE
+            y := y + 1;
+        FI
+    DONE
+    
+    finalResult := x + y + z;
+END 

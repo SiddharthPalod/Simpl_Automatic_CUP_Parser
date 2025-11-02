@@ -1,0 +1,15 @@
+BEGIN
+    n := 8;
+    a := 0;
+    b := 1;
+    i := 2;
+    
+    WHILE i <= n DO
+        temp := a + b;
+        a := b;
+        b := temp;
+        i := i + 1;
+    DONE
+    
+    fibonacci := b;
+END 

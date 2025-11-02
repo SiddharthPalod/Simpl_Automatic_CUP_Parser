@@ -1,0 +1,11 @@
+BEGIN
+    age := 25;
+    
+    IF age >= 18 THEN
+        status := adult;
+        canVote := true;
+    ELSE
+        status := minor;
+        canVote := false;
+    FI
+END 

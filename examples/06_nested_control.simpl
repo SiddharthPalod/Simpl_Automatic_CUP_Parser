@@ -1,0 +1,17 @@
+BEGIN
+    x := 5;
+    y := 10;
+    
+    WHILE x < 20 DO
+        IF x < y THEN
+            x := x + 2;
+        ELSE
+            IF x > y THEN
+                y := y + 1;
+            ELSE
+                x := x + 1;
+                y := y + 1;
+            FI
+        FI
+    DONE
+END 

@@ -1,0 +1,10 @@
+BEGIN
+    a := 2;
+    b := 3;
+    c := 4;
+    
+    result1 := (a + b) * c;
+    result2 := a + (b * c);
+    result3 := (a + b) * (c - a);
+    result4 := ((a * b) + c) / (b - a);
+END 

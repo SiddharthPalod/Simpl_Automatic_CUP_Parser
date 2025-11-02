@@ -1,0 +1,12 @@
+BEGIN
+    n := 5;
+    factorial := 1;
+    i := 1;
+    
+    WHILE i <= n DO
+        factorial := factorial * i;
+        i := i + 1;
+    DONE
+    
+    result := factorial;
+END 

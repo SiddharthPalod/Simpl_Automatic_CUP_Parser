@@ -1,0 +1,32 @@
+BEGIN
+    // Simple sorting of three numbers
+    a := 7;
+    b := 3;
+    c := 9;
+    
+    // Sort a and b
+    IF a > b THEN
+        temp := a;
+        a := b;
+        b := temp;
+    FI
+    
+    // Sort b and c
+    IF b > c THEN
+        temp := b;
+        b := c;
+        c := temp;
+    FI
+    
+    // Sort a and b again
+    IF a > b THEN
+        temp := a;
+        a := b;
+        b := temp;
+    FI
+    
+    // Now a <= b <= c
+    smallest := a;
+    middle := b;
+    largest := c;
+END 

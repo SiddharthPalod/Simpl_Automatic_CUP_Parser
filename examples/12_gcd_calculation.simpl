@@ -1,0 +1,15 @@
+BEGIN
+    a := 48;
+    b := 18;
+    
+    WHILE b != 0 DO
+        temp := b;
+        // Simulate modulo using repeated subtraction
+        WHILE a >= b DO
+            a := a - b;
+        DONE
+        b := temp;
+    DONE
+    
+    gcd := a;
+END 

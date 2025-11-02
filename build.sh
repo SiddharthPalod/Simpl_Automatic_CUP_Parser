@@ -8,7 +8,7 @@ echo ""
 # Set default paths if not provided
 if [ -z "$JFLEX_JAR" ]; then
     echo "JFLEX_JAR environment variable not set, using default path..."
-    JFLEX_JAR="D:/Siddharth/jflex-1.9.1/lib/jflex-full-1.9.1.jar"
+    JFLEX_JAR="ADD YOUR JFLEX JAR LOCATION HERE"
 fi
 
 # Check if JFlex jar exists
@@ -23,7 +23,7 @@ fi
 # Set default paths if not provided
 if [ -z "$CUP_JAR" ]; then
     echo "CUP_JAR environment variable not set, using default path..."
-    CUP_JAR="D:/Siddharth/java-cup-bin-11b-20160615/java-cup-11b.jar"
+    CUP_JAR="ADD YOUR CUP JAR LOCATION HERE"
 fi
 
 # Check if CUP jar exists

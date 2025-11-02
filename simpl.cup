@@ -1,0 +1,256 @@
+// SIMPL Language Grammar for JavaCUP
+import java.util.*;
+
+parser code {:
+    private Object parseResult = null;
+    
+    public Object getAST() { return parseResult; }
+    
+    @Override
+    public java_cup.runtime.Symbol parse() throws java.lang.Exception {
+        java_cup.runtime.Symbol result = super.parse();
+        if (result != null) {
+            parseResult = result.value;
+        }
+        return result;
+    }
+:};
+
+terminal PROC, RETURN, IF, THEN, ELSE, FI, WHILE, DO, DONE, BEGIN, END;
+terminal PLUS, MINUS, TIMES, DIV, EQ, NE, LT, GT, LE, GE, ASSIGN, SEMI, COMMA, LPAREN, RPAREN, LBRACE, RBRACE;
+terminal Integer NUM;
+terminal String ID;
+
+non terminal Object program;
+non terminal Object proc_decls;
+non terminal Object stmt_list;
+non terminal Object stmt;
+non terminal Object expr;
+non terminal Object proc_decl;
+non terminal Object params, args, param_list, arg_list;
+non terminal Object block;
+
+precedence left EQ, NE;
+precedence left LT, GT, LE, GE;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIV;
+
+program ::= proc_decls:pd block:body
+    {: 
+       List result = new ArrayList();
+       result.add("PROGRAM");
+       result.add(pd);
+       result.add(body);
+       RESULT = result;
+    :};
+
+proc_decls ::= /* empty */ {: RESULT = new ArrayList(); :}
+             | proc_decls:lst proc_decl:pd
+               {: 
+                  if (lst instanceof List) {
+                     ((List)lst).add(pd);
+                     RESULT = lst;
+                  } else {
+                     List newList = new ArrayList();
+                     newList.add(pd);
+                     RESULT = newList;
+                  }
+               :}
+             ;
+
+proc_decl ::= PROC ID:id LPAREN params:pl RPAREN block:body
+    {: 
+       List result = new ArrayList();
+       result.add("PROC");
+       result.add(id);
+       result.add(pl);
+       result.add(body);
+       RESULT = result;
+    :};
+
+params ::= /* empty */ {: RESULT = new ArrayList(); :}
+         | param_list:pl {: RESULT = pl; :};
+
+param_list ::= ID:id {: 
+                  List l = new ArrayList(); 
+                  l.add(id); 
+                  RESULT = l; 
+               :}
+             | param_list:pl COMMA ID:id {: 
+                  if (pl instanceof List) {
+                     ((List)pl).add(id);
+                     RESULT = pl;
+                  } else {
+                     List newList = new ArrayList();
+                     newList.add(pl);
+                     newList.add(id);
+                     RESULT = newList;
+                  }
+               :};
+
+block ::= LBRACE stmt_list:sl RBRACE {: RESULT = sl; :}
+       | BEGIN stmt_list:sl END {: RESULT = sl; :};
+
+stmt_list ::= /* empty */ {: RESULT = new ArrayList(); :}
+            | stmt_list:sl stmt:s {: 
+                  if (sl instanceof List) {
+                     ((List)sl).add(s);
+                     RESULT = sl;
+                  } else {
+                     List newList = new ArrayList();
+                     newList.add(sl);
+                     newList.add(s);
+                     RESULT = newList;
+                  }
+               :};
+
+stmt ::= ID:id ASSIGN expr:e SEMI {: 
+            List result = new ArrayList();
+            result.add("ASSIGN");
+            result.add(id);
+            result.add(e);
+            RESULT = result;
+         :}
+       | IF expr:c THEN stmt_list:th ELSE stmt_list:el FI
+         {: 
+            List result = new ArrayList();
+            result.add("IF");
+            result.add(c);
+            result.add(th);
+            result.add(el);
+            RESULT = result;
+          :}
+       | IF expr:c THEN stmt_list:th FI
+         {: 
+            List result = new ArrayList();
+            result.add("IF");
+            result.add(c);
+            result.add(th);
+            result.add(new ArrayList()); // empty else clause
+            RESULT = result;
+          :}
+       | WHILE expr:c DO stmt_list:b DONE
+         {: 
+            List result = new ArrayList();
+            result.add("WHILE");
+            result.add(c);
+            result.add(b);
+            RESULT = result;
+          :}
+       | ID:fname LPAREN args:al RPAREN SEMI
+         {: 
+            List result = new ArrayList();
+            result.add("CALL");
+            result.add(fname);
+            result.add(al);
+            RESULT = result;
+          :}
+       | RETURN expr:e SEMI
+         {: 
+            List result = new ArrayList();
+            result.add("RETURN");
+            result.add(e);
+            RESULT = result;
+          :}
+       ;
+
+args ::= /* empty */ {: RESULT = new ArrayList(); :}
+       | arg_list:al {: RESULT = al; :};
+
+arg_list ::= expr:e {: 
+                  List l = new ArrayList(); 
+                  l.add(e); 
+                  RESULT = l; 
+               :}
+           | arg_list:al COMMA expr:e {: 
+                  if (al instanceof List) {
+                     ((List)al).add(e);
+                     RESULT = al;
+                  } else {
+                     List newList = new ArrayList();
+                     newList.add(al);
+                     newList.add(e);
+                     RESULT = newList;
+                  }
+               :};
+
+expr ::= expr:l PLUS expr:r {: 
+            List result = new ArrayList();
+            result.add("PLUS");
+            result.add(l);
+            result.add(r);
+            RESULT = result;
+         :}
+       | expr:l MINUS expr:r {: 
+            List result = new ArrayList();
+            result.add("MINUS");
+            result.add(l);
+            result.add(r);
+            RESULT = result;
+         :}
+       | expr:l TIMES expr:r {: 
+            List result = new ArrayList();
+            result.add("TIMES");
+            result.add(l);
+            result.add(r);
+            RESULT = result;
+         :}
+       | expr:l DIV expr:r {: 
+            List result = new ArrayList();
+            result.add("DIV");
+            result.add(l);
+            result.add(r);
+            RESULT = result;
+         :}
+       | expr:l EQ expr:r {: 
+            List result = new ArrayList();
+            result.add("EQ");
+            result.add(l);
+            result.add(r);
+            RESULT = result;
+         :}
+       | expr:l NE expr:r {: 
+            List result = new ArrayList();
+            result.add("NE");
+            result.add(l);
+            result.add(r);
+            RESULT = result;
+         :}
+       | expr:l LT expr:r {: 
+            List result = new ArrayList();
+            result.add("LT");
+            result.add(l);
+            result.add(r);
+            RESULT = result;
+         :}
+       | expr:l GT expr:r {: 
+            List result = new ArrayList();
+            result.add("GT");
+            result.add(l);
+            result.add(r);
+            RESULT = result;
+         :}
+       | expr:l LE expr:r {: 
+            List result = new ArrayList();
+            result.add("LE");
+            result.add(l);
+            result.add(r);
+            RESULT = result;
+         :}
+       | expr:l GE expr:r {: 
+            List result = new ArrayList();
+            result.add("GE");
+            result.add(l);
+            result.add(r);
+            RESULT = result;
+         :}
+       | ID:id LPAREN args:al RPAREN {: 
+            List result = new ArrayList();
+            result.add("FUNCALL");
+            result.add(id);
+            result.add(al);
+            RESULT = result;
+         :}
+       | ID:id {: RESULT = id; :}
+       | NUM:n {: RESULT = n; :}
+       | LPAREN expr:e RPAREN {: RESULT = e; :};

@@ -1,0 +1,11 @@
+BEGIN
+x := 1;
+y := 5;
+WHILE x < 5 DO
+    IF x < y THEN
+        x := x + 1;
+    ELSE
+        y := y + 1;
+    FI
+DONE
+END

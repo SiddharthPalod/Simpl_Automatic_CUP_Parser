@@ -7,7 +7,7 @@ echo.
 REM Check if JFlex jar exists
 if not defined JFLEX_JAR (
     echo JFLEX_JAR environment variable not set, using default path...
-    set JFLEX_JAR=D:/Siddharth/jflex-1.9.1/lib/jflex-full-1.9.1.jar
+    set JFLEX_JAR="ADD YOUR JFLEX JAR LOCATION HERE"
 )
 if not exist "%JFLEX_JAR%" (
     echo ERROR: JFlex jar not found at: %JFLEX_JAR%
@@ -21,7 +21,7 @@ if not exist "%JFLEX_JAR%" (
 REM Check if CUP jar exists
 if not defined CUP_JAR (
     echo CUP_JAR environment variable not set, using default path...
-    set CUP_JAR=D:/Siddharth/java-cup-bin-11b-20160615/java-cup-11b.jar
+    set CUP_JAR=""ADD YOUR CUP JAR LOCATION HERE"
 )
 if not exist "%CUP_JAR%" (
     echo ERROR: CUP jar not found at: %CUP_JAR%
@@ -66,3 +66,4 @@ echo   - SimplParser.java (from CUP)
 echo   - sym.java (from CUP - already existed)
 echo.
 pause
+
